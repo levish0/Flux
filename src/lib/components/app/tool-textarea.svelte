@@ -80,7 +80,7 @@
 		</div>
 	</div>
 	<Textarea
-		class={cn('font-mono text-sm', grow && '!field-sizing-fixed min-h-0 flex-1 resize-none')}
+		class={cn('font-mono text-sm', grow && '!field-sizing-fixed min-h-0 flex-1 resize-none overflow-y-auto')}
 		bind:value
 		{placeholder}
 		{readonly}

@@ -3,10 +3,9 @@
 	import ToolOptionRow from '$lib/components/app/tool-option-row.svelte';
 	import { Switch } from '$lib/components/ui/switch/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
-	import { Button } from '$lib/components/ui/button/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
 	import * as Select from '$lib/components/ui/select/index.js';
-	import UploadIcon from '@lucide/svelte/icons/upload';
+	import * as FileDropZone from '$lib/components/ui/file-drop-zone/index.js';
 	import CheckIcon from '@lucide/svelte/icons/check';
 	import XIcon from '@lucide/svelte/icons/x';
 
@@ -47,25 +46,10 @@
 		processing = false;
 	}
 
-	function handleFileSelect() {
-		const input = document.createElement('input');
-		input.type = 'file';
-		input.onchange = () => {
-			const file = input.files?.[0];
-			if (file) hashFile(file);
-		};
-		input.click();
-	}
-
-	function handleDrop(e: DragEvent) {
-		e.preventDefault();
-		const file = e.dataTransfer?.files[0];
-		if (file) hashFile(file);
-	}
-
-	function handleDragOver(e: DragEvent) {
-		e.preventDefault();
-	}
+	const onUpload: FileDropZone.FileDropZoneRootProps['onUpload'] = async (files) => {
+		const file = files[0];
+		if (file) await hashFile(file);
+	};
 </script>
 
 <ToolPage title="Checksum File">
@@ -88,31 +72,21 @@
 		</ToolOptionRow>
 	</div>
 
-	<!-- File drop zone -->
-	<div
-		class="flex h-32 items-center justify-center rounded-lg border-2 border-dashed bg-muted/30 transition-colors hover:bg-muted/50"
-		ondrop={handleDrop}
-		ondragover={handleDragOver}
-		role="button"
-		tabindex="0"
-		onclick={handleFileSelect}
-		onkeydown={(e) => e.key === 'Enter' && handleFileSelect()}
+	<FileDropZone.Root
+		{onUpload}
+		maxFiles={1}
+		fileCount={0}
 	>
-		<div class="flex flex-col items-center gap-2 text-muted-foreground">
-			<UploadIcon class="size-8 opacity-50" />
-			{#if processing}
-				<p class="text-sm">Computing hash...</p>
-			{:else if fileName}
-				<p class="text-sm">{fileName}</p>
-			{:else}
-				<p class="text-sm">Drop a file here or click to browse</p>
-			{/if}
-		</div>
-	</div>
+		<FileDropZone.Trigger />
+	</FileDropZone.Root>
+
+	{#if processing}
+		<div class="text-sm text-muted-foreground">Computing hash for {fileName}...</div>
+	{/if}
 
 	{#if displayHash}
 		<div class="space-y-1.5">
-			<Label class="text-sm font-medium">Output</Label>
+			<Label class="text-sm font-medium">Output ({fileName})</Label>
 			<Input class="font-mono text-sm" value={displayHash} readonly />
 		</div>
 
