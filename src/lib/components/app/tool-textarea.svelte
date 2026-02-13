@@ -40,7 +40,7 @@
 	}
 </script>
 
-<div class={cn("space-y-2", grow && "flex min-h-0 flex-1 flex-col")}>
+<div class={cn('space-y-2', grow && 'flex min-h-0 flex-1 flex-col')}>
 	<div class="flex shrink-0 items-center justify-between">
 		<span class="text-sm font-medium">{label}</span>
 		<div class="flex items-center gap-1">
@@ -80,7 +80,7 @@
 		</div>
 	</div>
 	<Textarea
-		class={cn("font-mono text-sm", grow && "min-h-0 flex-1 resize-none !field-sizing-fixed")}
+		class={cn('font-mono text-sm', grow && '!field-sizing-fixed min-h-0 flex-1 resize-none')}
 		bind:value
 		{placeholder}
 		{readonly}

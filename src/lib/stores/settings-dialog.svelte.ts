@@ -9,5 +9,5 @@ export const settingsDialog = {
 	},
 	toggle() {
 		open = !open;
-	},
+	}
 };
