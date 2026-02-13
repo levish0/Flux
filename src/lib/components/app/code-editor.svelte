@@ -11,6 +11,11 @@
 	import { defaultKeymap, historyKeymap } from '@codemirror/commands';
 	import { history } from '@codemirror/commands';
 	import { json } from '@codemirror/lang-json';
+	import { xml } from '@codemirror/lang-xml';
+	import { sql } from '@codemirror/lang-sql';
+	import { yaml } from '@codemirror/lang-yaml';
+	import { javascript } from '@codemirror/lang-javascript';
+	import { markdown } from '@codemirror/lang-markdown';
 	import { oneDark } from '@codemirror/theme-one-dark';
 	import {
 		syntaxHighlighting,
@@ -36,7 +41,7 @@
 		label: string;
 		value?: string;
 		readonly?: boolean;
-		lang?: 'json' | 'plain';
+		lang?: 'json' | 'xml' | 'sql' | 'yaml' | 'javascript' | 'markdown' | 'plain';
 	} = $props();
 
 	let container: HTMLDivElement;
@@ -83,8 +88,15 @@
 	});
 
 	function getLangExtension(): Extension[] {
-		if (lang === 'json') return [json()];
-		return [];
+		switch (lang) {
+			case 'json': return [json()];
+			case 'xml': return [xml()];
+			case 'sql': return [sql()];
+			case 'yaml': return [yaml()];
+			case 'javascript': return [javascript()];
+			case 'markdown': return [markdown()];
+			default: return [];
+		}
 	}
 
 	function buildExtensions(isDark: boolean): Extension[] {

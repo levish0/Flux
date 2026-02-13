@@ -74,7 +74,7 @@ export const tools: ToolDefinition[] = [
 		category: 'converters',
 		icon: FileJsonIcon,
 		keywords: ['json', 'yaml', 'convert', 'transform'],
-		implemented: false
+		implemented: true
 	},
 	{
 		slug: 'number-base',
@@ -83,7 +83,7 @@ export const tools: ToolDefinition[] = [
 		category: 'converters',
 		icon: HashIcon,
 		keywords: ['number', 'base', 'binary', 'hex', 'octal', 'decimal'],
-		implemented: false
+		implemented: true
 	},
 	{
 		slug: 'timestamp',
@@ -92,7 +92,7 @@ export const tools: ToolDefinition[] = [
 		category: 'converters',
 		icon: ClockIcon,
 		keywords: ['timestamp', 'unix', 'date', 'time', 'epoch'],
-		implemented: false
+		implemented: true
 	},
 	{
 		slug: 'cron-parser',
@@ -101,7 +101,7 @@ export const tools: ToolDefinition[] = [
 		category: 'converters',
 		icon: TimerIcon,
 		keywords: ['cron', 'schedule', 'timer', 'parse'],
-		implemented: false
+		implemented: true
 	},
 
 	// Encoders / Decoders
@@ -121,7 +121,7 @@ export const tools: ToolDefinition[] = [
 		category: 'encoders-decoders',
 		icon: ImageIcon,
 		keywords: ['base64', 'image', 'encode', 'decode', 'png', 'jpg'],
-		implemented: false
+		implemented: true
 	},
 	{
 		slug: 'url-encoder',
@@ -148,7 +148,7 @@ export const tools: ToolDefinition[] = [
 		category: 'encoders-decoders',
 		icon: KeyRoundIcon,
 		keywords: ['jwt', 'token', 'decode', 'json', 'web', 'auth'],
-		implemented: false
+		implemented: true
 	},
 	{
 		slug: 'gzip',
@@ -157,7 +157,7 @@ export const tools: ToolDefinition[] = [
 		category: 'encoders-decoders',
 		icon: ArchiveIcon,
 		keywords: ['gzip', 'compress', 'decompress', 'zip'],
-		implemented: false
+		implemented: true
 	},
 
 	// Formatters
@@ -177,7 +177,7 @@ export const tools: ToolDefinition[] = [
 		category: 'formatters',
 		icon: FileCodeIcon,
 		keywords: ['xml', 'format', 'beautify', 'validate'],
-		implemented: false
+		implemented: true
 	},
 	{
 		slug: 'sql-formatter',
@@ -186,7 +186,7 @@ export const tools: ToolDefinition[] = [
 		category: 'formatters',
 		icon: DatabaseIcon,
 		keywords: ['sql', 'format', 'beautify', 'query'],
-		implemented: false
+		implemented: true
 	},
 
 	// Generators
@@ -215,7 +215,7 @@ export const tools: ToolDefinition[] = [
 		category: 'generators',
 		icon: LockIcon,
 		keywords: ['password', 'generate', 'random', 'secure'],
-		implemented: false
+		implemented: true
 	},
 	{
 		slug: 'lorem-ipsum',
@@ -224,7 +224,7 @@ export const tools: ToolDefinition[] = [
 		category: 'generators',
 		icon: TextIcon,
 		keywords: ['lorem', 'ipsum', 'placeholder', 'text', 'dummy'],
-		implemented: false
+		implemented: true
 	},
 	{
 		slug: 'checksum',
@@ -233,7 +233,7 @@ export const tools: ToolDefinition[] = [
 		category: 'generators',
 		icon: FileCheckIcon,
 		keywords: ['checksum', 'file', 'hash', 'verify', 'integrity'],
-		implemented: false
+		implemented: true
 	},
 
 	// Graphic Tools
@@ -244,7 +244,7 @@ export const tools: ToolDefinition[] = [
 		category: 'graphic-tools',
 		icon: PaletteIcon,
 		keywords: ['color', 'picker', 'hex', 'rgb', 'hsl', 'convert'],
-		implemented: false
+		implemented: true
 	},
 	{
 		slug: 'color-blindness',
@@ -300,7 +300,7 @@ export const tools: ToolDefinition[] = [
 		category: 'text-tools',
 		icon: RegexIcon,
 		keywords: ['regex', 'regular', 'expression', 'test', 'match', 'pattern'],
-		implemented: false
+		implemented: true
 	},
 	{
 		slug: 'text-diff',
@@ -309,7 +309,7 @@ export const tools: ToolDefinition[] = [
 		category: 'text-tools',
 		icon: DiffIcon,
 		keywords: ['diff', 'compare', 'text', 'difference', 'merge'],
-		implemented: false
+		implemented: true
 	},
 	{
 		slug: 'markdown-preview',
@@ -318,7 +318,7 @@ export const tools: ToolDefinition[] = [
 		category: 'text-tools',
 		icon: FileTextIcon,
 		keywords: ['markdown', 'preview', 'render', 'md'],
-		implemented: false
+		implemented: true
 	},
 	{
 		slug: 'xml-validator',
@@ -327,7 +327,7 @@ export const tools: ToolDefinition[] = [
 		category: 'text-tools',
 		icon: FileCode2Icon,
 		keywords: ['xml', 'validate', 'syntax', 'check'],
-		implemented: false
+		implemented: true
 	},
 	{
 		slug: 'json-path',
@@ -336,7 +336,7 @@ export const tools: ToolDefinition[] = [
 		category: 'text-tools',
 		icon: SearchCodeIcon,
 		keywords: ['json', 'path', 'jsonpath', 'query', 'test'],
-		implemented: false
+		implemented: true
 	},
 	{
 		slug: 'escape-unescape',
@@ -345,7 +345,7 @@ export const tools: ToolDefinition[] = [
 		category: 'text-tools',
 		icon: ShieldIcon,
 		keywords: ['escape', 'unescape', 'string', 'special', 'characters'],
-		implemented: false
+		implemented: true
 	},
 	{
 		slug: 'text-inspector',
@@ -354,7 +354,7 @@ export const tools: ToolDefinition[] = [
 		category: 'text-tools',
 		icon: ScanTextIcon,
 		keywords: ['text', 'inspect', 'encoding', 'whitespace', 'line', 'endings'],
-		implemented: false
+		implemented: true
 	},
 	{
 		slug: 'list-comparer',
@@ -363,7 +363,7 @@ export const tools: ToolDefinition[] = [
 		category: 'text-tools',
 		icon: ListChecksIcon,
 		keywords: ['list', 'compare', 'diff', 'intersection', 'union'],
-		implemented: false
+		implemented: true
 	}
 ];
 

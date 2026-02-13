@@ -5,7 +5,7 @@
 	let { data }: { data: PageData } = $props();
 </script>
 
-<div class="mx-auto w-full max-w-6xl space-y-6 p-6">
+<div class="w-full space-y-6 p-6">
 	<div class="space-y-2">
 		<h1 class="text-2xl font-bold tracking-tight">{data.category.name}</h1>
 		<p class="text-sm text-muted-foreground">
@@ -13,7 +13,7 @@
 		</p>
 	</div>
 
-	<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+	<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 		{#each data.tools as tool (tool.slug)}
 			{@const ToolIcon = tool.icon}
 			<a
