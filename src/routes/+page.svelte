@@ -1,155 +1,77 @@
 <script lang="ts">
-	import { invoke } from '@tauri-apps/api/core';
+	import { categories, toolsByCategory, searchTools } from '$lib/tools/registry';
+	import SearchIcon from '@lucide/svelte/icons/search';
+	import { Input } from '$lib/components/ui/input/index.js';
+	import { Badge } from '$lib/components/ui/badge/index.js';
 
-	let name = $state('');
-	let greetMsg = $state('');
+	let searchQuery = $state('');
 
-	async function greet(event: Event) {
-		event.preventDefault();
-		// Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-		greetMsg = await invoke('greet', { name });
-	}
+	let displayCategories = $derived.by(() => {
+		if (!searchQuery.trim()) {
+			return categories.map((cat) => ({
+				...cat,
+				tools: toolsByCategory.get(cat.slug) ?? []
+			}));
+		}
+		const matched = searchTools(searchQuery);
+		return categories
+			.map((cat) => ({
+				...cat,
+				tools: matched.filter((t) => t.category === cat.slug)
+			}))
+			.filter((cat) => cat.tools.length > 0);
+	});
 </script>
 
-<main class="container bg-red-800">
-	<h1>Welcome to Tauri + Svelte</h1>
-
-	<div class="row">
-		<a href="https://vite.dev" target="_blank">
-			<img src="/vite.svg" class="logo vite" alt="Vite Logo" />
-		</a>
-		<a href="https://tauri.app" target="_blank">
-			<img src="/tauri.svg" class="logo tauri" alt="Tauri Logo" />
-		</a>
-		<a href="https://svelte.dev" target="_blank">
-			<img src="/svelte.svg" class="logo svelte-kit" alt="SvelteKit Logo" />
-		</a>
+<div class="w-full space-y-8 p-6">
+	<div class="space-y-2">
+		<h1 class="text-3xl font-bold tracking-tight">All Tools</h1>
+		<p class="text-muted-foreground">A collection of developer utilities, all in one place.</p>
 	</div>
-	<p>Click on the Tauri, Vite, and SvelteKit logos to learn more.</p>
 
-	<form class="row" onsubmit={greet}>
-		<input id="greet-input" placeholder="Enter a name..." bind:value={name} />
-		<button type="submit" style="text-2xl">Greet</button>
-	</form>
-	<p>{greetMsg}</p>
-</main>
+	<div class="relative max-w-md">
+		<SearchIcon
+			class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
+		/>
+		<Input placeholder="Search tools..." class="pl-9" bind:value={searchQuery} />
+	</div>
 
-<style>
-	.logo.vite:hover {
-		filter: drop-shadow(0 0 2em #747bff);
-	}
+	{#each displayCategories as cat (cat.slug)}
+		<section class="space-y-3">
+			<div class="flex items-center gap-2">
+				<h2 class="text-lg font-semibold">{cat.name}</h2>
+				<span class="text-sm text-muted-foreground">({cat.tools.length})</span>
+			</div>
 
-	.logo.svelte-kit:hover {
-		filter: drop-shadow(0 0 2em #ff3e00);
-	}
+			<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+				{#each cat.tools as tool (tool.slug)}
+					{@const ToolIcon = tool.icon}
+					<a
+						href="/tools/{tool.category}/{tool.slug}"
+						class="group relative flex items-start gap-3 rounded-lg border border-border bg-card p-4 transition-colors hover:bg-accent/50"
+						class:opacity-50={!tool.implemented}
+					>
+						<div class="flex size-9 shrink-0 items-center justify-center rounded-md bg-muted">
+							<ToolIcon class="size-4 text-muted-foreground" />
+						</div>
+						<div class="flex flex-1 flex-col gap-0.5">
+							<div class="flex items-center justify-between">
+								<h3 class="text-sm font-medium">{tool.name}</h3>
+								{#if !tool.implemented}
+									<Badge variant="secondary" class="text-[10px]">Soon</Badge>
+								{/if}
+							</div>
+							<p class="text-xs text-muted-foreground">{tool.description}</p>
+						</div>
+					</a>
+				{/each}
+			</div>
+		</section>
+	{/each}
 
-	:root {
-		font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-		font-size: 16px;
-		line-height: 24px;
-		font-weight: 400;
-
-		color: #0f0f0f;
-		background-color: #f6f6f6;
-
-		font-synthesis: none;
-		text-rendering: optimizeLegibility;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		-webkit-text-size-adjust: 100%;
-	}
-
-	.container {
-		margin: 0;
-		padding-top: 10vh;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		text-align: center;
-	}
-
-	.logo {
-		height: 6em;
-		padding: 1.5em;
-		will-change: filter;
-		transition: 0.75s;
-	}
-
-	.logo.tauri:hover {
-		filter: drop-shadow(0 0 2em #24c8db);
-	}
-
-	.row {
-		display: flex;
-		justify-content: center;
-	}
-
-	a {
-		font-weight: 500;
-		color: #646cff;
-		text-decoration: inherit;
-	}
-
-	a:hover {
-		color: #535bf2;
-	}
-
-	h1 {
-		text-align: center;
-	}
-
-	input,
-	button {
-		border-radius: 8px;
-		border: 1px solid transparent;
-		padding: 0.6em 1.2em;
-		font-size: 1em;
-		font-weight: 500;
-		font-family: inherit;
-		color: #0f0f0f;
-		background-color: #ffffff;
-		transition: border-color 0.25s;
-		box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-	}
-
-	button {
-		cursor: pointer;
-	}
-
-	button:hover {
-		border-color: #396cd8;
-	}
-	button:active {
-		border-color: #396cd8;
-		background-color: #e8e8e8;
-	}
-
-	input,
-	button {
-		outline: none;
-	}
-
-	#greet-input {
-		margin-right: 5px;
-	}
-
-	@media (prefers-color-scheme: dark) {
-		:root {
-			color: #f6f6f6;
-			background-color: #2f2f2f;
-		}
-
-		a:hover {
-			color: #24c8db;
-		}
-
-		input,
-		button {
-			color: #ffffff;
-			background-color: #0f0f0f98;
-		}
-		button:active {
-			background-color: #0f0f0f69;
-		}
-	}
-</style>
+	{#if displayCategories.length === 0}
+		<div class="py-12 text-center text-muted-foreground">
+			No tools found matching "{searchQuery}"
+		</div>
+	{/if}
+</div>
