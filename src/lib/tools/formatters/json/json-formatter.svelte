@@ -86,7 +86,7 @@
 		{/if}
 	</div>
 
-	<Resizable.PaneGroup direction="horizontal" class="!h-auto min-h-0 flex-1">
+	<Resizable.PaneGroup direction="horizontal" class="!h-0 min-h-0 flex-1">
 		<Resizable.Pane defaultSize={50} minSize={20}>
 			<CodeEditor label="Input" bind:value={input} lang="json" />
 		</Resizable.Pane>

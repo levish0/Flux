@@ -15,7 +15,7 @@
 	} = $props();
 </script>
 
-<div class={cn('flex w-full flex-col gap-4 p-6', fillHeight && 'h-full overflow-hidden')}>
+<div class={cn('flex h-full w-full flex-col gap-4 p-6', fillHeight ? 'overflow-hidden' : 'overflow-y-auto')}>
 	<div class="shrink-0">
 		<h1 class="text-2xl font-bold tracking-tight">{title}</h1>
 		{#if description}

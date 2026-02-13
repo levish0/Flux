@@ -1,8 +1,9 @@
 <script lang="ts">
 	import ToolPage from '$lib/components/app/tool-page.svelte';
-	import ToolTextarea from '$lib/components/app/tool-textarea.svelte';
+	import CodeEditor from '$lib/components/app/code-editor.svelte';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
+	import * as Resizable from '$lib/components/ui/resizable/index.js';
 	import { JSONPath } from 'jsonpath-plus';
 
 	let jsonInput = $state(`{
@@ -32,7 +33,7 @@
 			if (matches.length === 1) return JSON.stringify(matches[0], null, 2);
 			return JSON.stringify(matches, null, 2);
 		} catch (e) {
-			return `⚠ ${e instanceof Error ? e.message : 'Error'}`;
+			return `Error: ${e instanceof Error ? e.message : 'Error'}`;
 		}
 	});
 </script>
@@ -44,6 +45,15 @@
 		<p class="text-xs text-muted-foreground">Supports: $.property, [index], [*], .., [?(@.price>10)]</p>
 	</div>
 
-	<ToolTextarea label="JSON" bind:value={jsonInput} placeholder="Paste JSON here..." grow />
-	<ToolTextarea label="Result" value={result} readonly rows={6} />
+	<Resizable.PaneGroup direction="horizontal" class="!h-0 min-h-0 flex-1">
+		<Resizable.Pane defaultSize={50} minSize={20}>
+			<CodeEditor label="JSON" bind:value={jsonInput} lang="json" />
+		</Resizable.Pane>
+		<Resizable.Handle
+			class="w-3 rounded bg-transparent transition-colors hover:bg-accent/50 data-[resize-handle-active]:bg-accent/50"
+		/>
+		<Resizable.Pane defaultSize={50} minSize={20}>
+			<CodeEditor label="Result" value={result} readonly lang="json" />
+		</Resizable.Pane>
+	</Resizable.PaneGroup>
 </ToolPage>

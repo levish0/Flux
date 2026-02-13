@@ -73,7 +73,7 @@
 				</Breadcrumb.Root>
 			</div>
 		</header>
-		<div class="min-h-0 flex-1 overflow-auto">
+		<div class="min-h-0 flex-1 overflow-hidden">
 			{@render children()}
 		</div>
 	</Sidebar.Inset>

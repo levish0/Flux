@@ -29,6 +29,6 @@
 	});
 </script>
 
-<input class="hidden" {...rootState.props} {...rest} />
+<input class="sr-only" {...rootState.props} {...rest} />
 
 {@render children?.()}

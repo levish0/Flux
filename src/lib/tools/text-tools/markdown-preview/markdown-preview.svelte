@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ToolPage from '$lib/components/app/tool-page.svelte';
-	import ToolTextarea from '$lib/components/app/tool-textarea.svelte';
-	import { Label } from '$lib/components/ui/label/index.js';
+	import CodeEditor from '$lib/components/app/code-editor.svelte';
+	import * as Resizable from '$lib/components/ui/resizable/index.js';
 	import { marked } from 'marked';
 
 	let input = $state(`# Markdown Preview
@@ -39,17 +39,24 @@ function hello() {
 </script>
 
 <ToolPage title="Markdown Preview" fillHeight>
-	<div class="flex min-h-0 flex-1 gap-4">
-		<div class="flex min-h-0 flex-1 flex-col gap-2">
-			<ToolTextarea label="Markdown" bind:value={input} placeholder="Type markdown here..." grow />
-		</div>
-		<div class="flex min-h-0 flex-1 flex-col gap-2">
-			<Label class="shrink-0 text-sm font-medium">Preview</Label>
-			<div class="prose min-h-0 flex-1 overflow-auto rounded-lg border bg-background p-4">
-				{@html html}
+	<Resizable.PaneGroup direction="horizontal" class="!h-0 min-h-0 flex-1">
+		<Resizable.Pane defaultSize={50} minSize={20}>
+			<CodeEditor label="Markdown" bind:value={input} lang="markdown" />
+		</Resizable.Pane>
+		<Resizable.Handle
+			class="w-3 rounded bg-transparent transition-colors hover:bg-accent/50 data-[resize-handle-active]:bg-accent/50"
+		/>
+		<Resizable.Pane defaultSize={50} minSize={20}>
+			<div class="flex h-full flex-col">
+				<div class="shrink-0 pb-2">
+					<span class="text-sm font-medium">Preview</span>
+				</div>
+				<div class="prose min-h-0 flex-1 overflow-auto rounded-md border border-border p-4">
+					{@html html}
+				</div>
 			</div>
-		</div>
-	</div>
+		</Resizable.Pane>
+	</Resizable.PaneGroup>
 </ToolPage>
 
 <style>

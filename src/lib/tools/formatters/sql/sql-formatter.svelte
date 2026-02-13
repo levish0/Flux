@@ -1,8 +1,9 @@
 <script lang="ts">
 	import ToolPage from '$lib/components/app/tool-page.svelte';
-	import ToolTextarea from '$lib/components/app/tool-textarea.svelte';
+	import CodeEditor from '$lib/components/app/code-editor.svelte';
 	import ToolOptionRow from '$lib/components/app/tool-option-row.svelte';
 	import * as Select from '$lib/components/ui/select/index.js';
+	import * as Resizable from '$lib/components/ui/resizable/index.js';
 	import { format } from 'sql-formatter';
 
 	let language = $state('sql');
@@ -46,7 +47,7 @@
 				keywordCase: keywordCase as any
 			});
 		} catch (e) {
-			return `⚠ ${e instanceof Error ? e.message : 'Failed to format SQL'}`;
+			return `-- Error: ${e instanceof Error ? e.message : 'Failed to format SQL'}`;
 		}
 	});
 </script>
@@ -93,6 +94,15 @@
 		</ToolOptionRow>
 	</div>
 
-	<ToolTextarea label="Input" bind:value={input} placeholder="SELECT * FROM users WHERE id = 1" grow />
-	<ToolTextarea label="Output" value={output} readonly grow />
+	<Resizable.PaneGroup direction="horizontal" class="!h-0 min-h-0 flex-1">
+		<Resizable.Pane defaultSize={50} minSize={20}>
+			<CodeEditor label="Input" bind:value={input} lang="sql" />
+		</Resizable.Pane>
+		<Resizable.Handle
+			class="w-3 rounded bg-transparent transition-colors hover:bg-accent/50 data-[resize-handle-active]:bg-accent/50"
+		/>
+		<Resizable.Pane defaultSize={50} minSize={20}>
+			<CodeEditor label="Output" value={output} readonly lang="sql" />
+		</Resizable.Pane>
+	</Resizable.PaneGroup>
 </ToolPage>

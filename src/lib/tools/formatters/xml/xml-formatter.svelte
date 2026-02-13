@@ -1,8 +1,9 @@
 <script lang="ts">
 	import ToolPage from '$lib/components/app/tool-page.svelte';
-	import ToolTextarea from '$lib/components/app/tool-textarea.svelte';
+	import CodeEditor from '$lib/components/app/code-editor.svelte';
 	import ToolOptionRow from '$lib/components/app/tool-option-row.svelte';
 	import * as Select from '$lib/components/ui/select/index.js';
+	import * as Resizable from '$lib/components/ui/resizable/index.js';
 	import xmlFormat from 'xml-formatter';
 
 	let indentation = $state('2-spaces');
@@ -32,7 +33,7 @@
 			}
 			return xmlFormat(input, { indentation: getIndent(), collapseContent: true });
 		} catch (e) {
-			return `⚠ ${e instanceof Error ? e.message : 'Failed to format XML'}`;
+			return `<!-- Error: ${e instanceof Error ? e.message : 'Failed to format XML'} -->`;
 		}
 	});
 </script>
@@ -51,6 +52,15 @@
 		</Select.Root>
 	</ToolOptionRow>
 
-	<ToolTextarea label="Input" bind:value={input} placeholder="Paste XML here..." grow />
-	<ToolTextarea label="Output" value={output} readonly grow />
+	<Resizable.PaneGroup direction="horizontal" class="!h-0 min-h-0 flex-1">
+		<Resizable.Pane defaultSize={50} minSize={20}>
+			<CodeEditor label="Input" bind:value={input} lang="xml" />
+		</Resizable.Pane>
+		<Resizable.Handle
+			class="w-3 rounded bg-transparent transition-colors hover:bg-accent/50 data-[resize-handle-active]:bg-accent/50"
+		/>
+		<Resizable.Pane defaultSize={50} minSize={20}>
+			<CodeEditor label="Output" value={output} readonly lang="xml" />
+		</Resizable.Pane>
+	</Resizable.PaneGroup>
 </ToolPage>

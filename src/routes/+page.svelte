@@ -23,7 +23,7 @@
 	});
 </script>
 
-<div class="w-full space-y-8 p-6">
+<div class="h-full w-full space-y-8 overflow-y-auto p-6">
 	<div class="space-y-2">
 		<h1 class="text-3xl font-bold tracking-tight">All Tools</h1>
 		<p class="text-muted-foreground">A collection of developer utilities, all in one place.</p>
